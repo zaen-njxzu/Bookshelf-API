@@ -79,7 +79,9 @@ const getAllBooksHandler = (request, h) => {
   const { name, reading, finished } = request.query;
 
   if (name) {
-    filteredBookshelf = books.filter((book) => !(book.name.includes(name.toLowerCase())));
+    filteredBookshelf = books.filter(
+      (book) => book.name.toLowerCase().includes(name.toLowerCase()),
+    );
   } else if (reading) {
     filteredBookshelf = books.filter((book) => book.reading === (reading === '1'));
   } else if (finished) {
