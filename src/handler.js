@@ -74,7 +74,6 @@ const addBookHandler = (request, h) => {
 
 const getAllBooksHandler = (request, h) => {
   let filteredBookshelf = [...books];
-  const convertedBookshelf = [];
 
   const { name, reading, finished } = request.query;
 
@@ -88,18 +87,16 @@ const getAllBooksHandler = (request, h) => {
     filteredBookshelf = books.filter((book) => book.finished === (finished === '1'));
   }
 
-  filteredBookshelf.forEach((book) => {
-    convertedBookshelf.push({
-      id: book.id,
-      name: book.name,
-      publisher: book.publisher,
-    });
-  });
+  filteredBookshelf = filteredBookshelf.map((book) => ({
+    id: book.id,
+    name: book.name,
+    publisher: book.publisher,
+  }));
 
   const response = h.response({
     status: 'success',
     data: {
-      books: convertedBookshelf,
+      books: filteredBookshelf,
     },
   });
 
